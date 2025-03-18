@@ -1,0 +1,12 @@
+ensure normal path and classpath settings for jdk 1.4 or higher only 
+to run
+
+1.compile all the source files
+
+2.to run 
+       
+        java algo.AlgoFrame
+
+3.Specify the file to be encrypted and destinationpath.
+
+4.Similarly for Decryption

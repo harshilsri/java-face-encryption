@@ -1,0 +1,381 @@
+// Decompiled by DJ v2.8.8.54 Copyright 2000 Atanas Neshkov  Date: 3/11/2010 5:04:52 PM
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   AlgoFrame.java
+
+package algo;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+
+// Referenced classes of package algo:
+//            PasswordDialog, Connector, PropertiesDialog, MsgBox, 
+//            ReceiverClient
+
+public class AlgoFrame extends JFrame
+{
+
+    public AlgoFrame()
+    {
+        initDir = null;
+        jPanel1 = new JPanel();
+        jtfInputFile = new JTextField();
+        jtfOutputFile = new JTextField();
+        jlInFile = new JLabel();
+        jlOutFile = new JLabel();
+        jbInFile = new JButton();
+        jbOutFile = new JButton();
+        jbProperties = new JButton();
+        jbOk = new JButton();
+        jbExit = new JButton();
+        jbCancel = new JButton();
+        f = null;
+        cbgOperation = new CheckboxGroup();
+        cbEncrypt = new Checkbox();
+        cbDecrypt = new Checkbox();
+        BLOCK_SIZE = 128;
+        KEY_SIZE = 128;
+        pbPosition = new JProgressBar();
+        tk = Toolkit.getDefaultToolkit();
+        content = getContentPane();
+        img = tk.createImage("java-samples.jpg");
+        pbPosition.setVisible(false);
+        try
+        {
+            jbInit();
+        }
+        catch(Exception exception)
+        {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void main(String args[])
+    {
+        AlgoFrame algoframe = new AlgoFrame();
+        algoframe.setResizable(true);
+    }
+
+    private void jbInit()
+        throws Exception
+    {
+        setSize(1024, 768);
+        setResizable(false);
+        setTitle("ACCESS CONTROL TOOL");
+        border1 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(142, 142, 142), new Color(99, 99, 99));
+        border2 = new EtchedBorder(0, Color.white, new Color(142, 142, 142));
+        border3 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(148, 145, 140), new Color(103, 101, 98));
+        border4 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(142, 142, 142), new Color(99, 99, 99));
+        border5 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(142, 142, 142), new Color(99, 99, 99));
+        border6 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(142, 142, 142), new Color(99, 99, 99));
+        border7 = BorderFactory.createBevelBorder(0, Color.white, Color.white, new Color(142, 142, 142), new Color(99, 99, 99));
+        border8 = BorderFactory.createLineBorder(SystemColor.windowBorder, 2);
+        jPanel1.setBackground(SystemColor.control);
+        jPanel1.setForeground(Color.red);
+        jPanel1.setBorder(border8);
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(null);
+        jtfInputFile.setFont(new Font("SansSerif", 1, 12));
+        jtfInputFile.setCaretColor(Color.red);
+        jtfInputFile.setText("Select Input File");
+        jtfInputFile.setBounds(new Rectangle(140, 57, 200, 30));
+        jtfOutputFile.setFont(new Font("SansSerif", 1, 12));
+        jtfOutputFile.setCaretColor(Color.red);
+        jtfOutputFile.setText("Select Output File");
+        jtfOutputFile.setBounds(new Rectangle(140, 117, 203, 30));
+        jbInFile.setBorder(border1);
+        jbInFile.setToolTipText("Select In File");
+        jbInFile.setText("Browse...");
+        jbInFile.setBounds(new Rectangle(350, 56, 79, 27));
+        jbInFile.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent actionevent)
+            {
+                inFileActionPerformed(actionevent);
+            }
+
+            final AlgoFrame this$0;
+
+            
+            {
+                this$0 = AlgoFrame.this;
+                super();
+            }
+        });
+        jbOutFile.setBounds(new Rectangle(350, 117, 79, 27));
+        jbOutFile.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent actionevent)
+            {
+                outFileActionPerformed(actionevent);
+            }
+
+            final AlgoFrame this$0;
+
+            
+            {
+                this$0 = AlgoFrame.this;
+                super();
+            }
+        });
+        jbOutFile.setBorder(border7);
+        jbOutFile.setToolTipText("Select  Out File");
+        jbOutFile.setText("Browse...");
+        jbProperties.setFont(new Font("SansSerif", 1, 10));
+        jbProperties.setBorder(border2);
+        jbProperties.setText("File Transfer");
+        jbProperties.setBounds(new Rectangle(320, 166, 113, 30));
+        jbProperties.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent actionevent)
+            {
+                new ReceiverClient();
+            }
+
+            final AlgoFrame this$0;
+
+            
+            {
+                this$0 = AlgoFrame.this;
+                super();
+            }
+        });
+        jlInFile.setForeground(Color.blue);
+        jlInFile.setText("Select Input  File ");
+        jlInFile.setBounds(new Rectangle(8, 60, 96, 28));
+        jlOutFile.setForeground(Color.blue);
+        jlOutFile.setText("Select Output File ");
+        jlOutFile.setBounds(new Rectangle(11, 126, 105, 22));
+        jbOk.setBorder(border4);
+        jbOk.setText("OK");
+        jbOk.setBounds(new Rectangle(75, 235, 86, 28));
+        jbOk.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent actionevent)
+            {
+                okActionPerformed(actionevent);
+            }
+
+            final AlgoFrame this$0;
+
+            
+            {
+                this$0 = AlgoFrame.this;
+                super();
+            }
+        });
+        jbExit.setBounds(new Rectangle(168, 235, 86, 28));
+        jbExit.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent actionevent)
+            {
+                exitActionPerformed(actionevent);
+            }
+
+            final AlgoFrame this$0;
+
+            
+            {
+                this$0 = AlgoFrame.this;
+                super();
+            }
+        });
+        jbExit.setBorder(border6);
+        jbExit.setText("Close");
+        jbCancel.setBounds(new Rectangle(78, 235, 86, 28));
+        jbCancel.setBorder(border5);
+        jbCancel.setText("Cancel");
+        cbEncrypt.setBackground(Color.white);
+        cbEncrypt.setBounds(new Rectangle(105, 170, 80, 23));
+        cbEncrypt.setFont(new Font("Serif", 1, 12));
+        cbEncrypt.setForeground(Color.blue);
+        cbEncrypt.setCheckboxGroup(cbgOperation);
+        cbEncrypt.setLabel("Encode");
+        cbEncrypt.setState(true);
+        cbDecrypt.setBackground(Color.white);
+        cbDecrypt.setBounds(new Rectangle(190, 170, 80, 23));
+        cbDecrypt.setFont(new Font("Serif", 1, 12));
+        cbDecrypt.setForeground(Color.blue);
+        cbDecrypt.setCheckboxGroup(cbgOperation);
+        cbDecrypt.setLabel("Decode");
+        setResizable(false);
+        pbPosition.setBackground(Color.white);
+        pbPosition.setForeground(Color.red);
+        pbPosition.setStringPainted(true);
+        pbPosition.setBounds(new Rectangle(250, 10, 148, 22));
+        Container container = getContentPane();
+        container.add(jPanel1, "Center");
+        jPanel1.add(jbInFile, null);
+        jPanel1.add(jtfInputFile, null);
+        jPanel1.add(jtfOutputFile, null);
+        jPanel1.add(jbOutFile, null);
+        jPanel1.add(jlInFile, null);
+        jPanel1.add(jlOutFile, null);
+        jPanel1.add(jbProperties, null);
+        jPanel1.add(jbExit, null);
+        jPanel1.add(jbOk, null);
+        jPanel1.add(cbEncrypt, null);
+        jPanel1.add(cbDecrypt, null);
+        jPanel1.add(pbPosition, null);
+        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        SwingUtilities.updateComponentTreeUI(this);
+        show();
+    }
+
+    private void okActionPerformed(ActionEvent actionevent)
+    {
+        pbPosition.setValue(0);
+        PasswordDialog passworddialog = new PasswordDialog(this);
+        passworddialog.show();
+        String s = "0";
+        if(!passworddialog.cancel)
+            s = passworddialog.tfPassword.getText();
+        else
+            return;
+        for(int i = s.length(); i < KEY_SIZE / 8; i++)
+            s = (new StringBuilder()).append(s).append("0").toString();
+
+        pbPosition.setVisible(true);
+        Connector connector = new Connector(pbPosition);
+        try
+        {
+            connector.setKey(s.getBytes());
+            f = new File(jtfInputFile.getText());
+            Object obj = null;
+            byte byte0 = 0;
+            if(cbEncrypt.getState())
+            {
+                byte abyte0[];
+                if(f.length() % (long)BLOCK_SIZE != 0L)
+                {
+                    byte0 = (byte)(int)((long)BLOCK_SIZE - f.length() % (long)BLOCK_SIZE);
+                    abyte0 = new byte[(int)f.length() + byte0 + 1];
+                    FileInputStream fileinputstream = new FileInputStream(f);
+                    fileinputstream.read(abyte0, 1, (int)f.length());
+                    fileinputstream.close();
+                } else
+                {
+                    abyte0 = new byte[(int)f.length() + 1];
+                    FileInputStream fileinputstream1 = new FileInputStream(f);
+                    fileinputstream1.read(abyte0, 1, (int)f.length());
+                    fileinputstream1.close();
+                }
+                byte abyte2[] = connector.encrypt(abyte0, 1, abyte0.length - 1);
+                byte abyte3[] = new byte[abyte2.length + 1];
+                System.arraycopy(abyte2, 0, abyte3, 1, abyte2.length);
+                abyte3[0] = byte0;
+                f = new File(jtfOutputFile.getText());
+                FileOutputStream fileoutputstream = new FileOutputStream(f);
+                fileoutputstream.write(abyte3);
+                fileoutputstream.close();
+            } else
+            {
+                byte abyte1[] = new byte[(int)f.length()];
+                FileInputStream fileinputstream2 = new FileInputStream(f);
+                fileinputstream2.read(abyte1);
+                byte byte1 = abyte1[0];
+                byte abyte4[] = new byte[abyte1.length - 1];
+                System.arraycopy(abyte1, 1, abyte4, 0, abyte4.length);
+                byte abyte5[] = connector.decrypt(abyte4);
+                byte abyte6[] = new byte[abyte5.length - byte1];
+                System.arraycopy(abyte5, 0, abyte6, 0, abyte6.length);
+                f = new File(jtfOutputFile.getText());
+                FileOutputStream fileoutputstream1 = new FileOutputStream(f);
+                fileoutputstream1.write(abyte6);
+                fileoutputstream1.close();
+            }
+            MsgBox.show("Operation Completed");
+        }
+        catch(Exception exception)
+        {
+            MsgBox.show((new StringBuilder()).append("ERROR :").append(exception.getMessage()).toString());
+            exception.printStackTrace();
+        }
+        pbPosition.setVisible(false);
+    }
+
+    private void cancelActionPerformed(ActionEvent actionevent)
+    {
+    }
+
+    private void exitActionPerformed(ActionEvent actionevent)
+    {
+        System.exit(0);
+    }
+
+    private void readOnlyActionPerformed(ActionEvent actionevent)
+    {
+        f.setReadOnly();
+    }
+
+    private void propertiesActionPerformed(ActionEvent actionevent)
+    {
+        PropertiesDialog propertiesdialog = new PropertiesDialog(this);
+        propertiesdialog.setVisible(true);
+        BLOCK_SIZE = propertiesdialog.BLOCK_SIZE;
+        KEY_SIZE = propertiesdialog.KEY_SIZE;
+    }
+
+    private void inFileActionPerformed(ActionEvent actionevent)
+    {
+        if(initDir == null)
+            initDir = System.getProperty("user.dir", "C:\\");
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setCurrentDirectory(new File(initDir));
+        jfilechooser.showOpenDialog(this);
+        initDir = jfilechooser.getCurrentDirectory().getAbsolutePath();
+        jtfInputFile.setText(jfilechooser.getSelectedFile().getAbsolutePath());
+    }
+
+    private void outFileActionPerformed(ActionEvent actionevent)
+    {
+        if(initDir == null)
+            initDir = System.getProperty("user.dir", "C:\\");
+        JFileChooser jfilechooser = new JFileChooser();
+        jfilechooser.setCurrentDirectory(new File(initDir));
+        jfilechooser.showSaveDialog(this);
+        initDir = jfilechooser.getCurrentDirectory().getAbsolutePath();
+        jtfOutputFile.setText(jfilechooser.getSelectedFile().getAbsolutePath());
+    }
+
+    Container content;
+    String initDir;
+    private JPanel jPanel1;
+    JTextField jtfInputFile;
+    JTextField jtfOutputFile;
+    private JLabel jlInFile;
+    private JLabel jlOutFile;
+    private JButton jbInFile;
+    private JButton jbOutFile;
+    private JButton jbProperties;
+    private JButton jbOk;
+    private JButton jbExit;
+    private JButton jbCancel;
+    private Border border1;
+    private Border border2;
+    private Border border3;
+    private Border border4;
+    private Border border5;
+    private Border border6;
+    private Border border7;
+    private Border border8;
+    File f;
+    private CheckboxGroup cbgOperation;
+    Checkbox cbEncrypt;
+    Checkbox cbDecrypt;
+    int BLOCK_SIZE;
+    int KEY_SIZE;
+    JProgressBar pbPosition;
+    Toolkit tk;
+    public static Image img = null;
+
+
+
+
+
+}
